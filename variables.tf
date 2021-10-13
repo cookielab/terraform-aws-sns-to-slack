@@ -1,11 +1,11 @@
 variable "topic_name" {
   type    = string
-  default = null
+  default = ""
 }
 
 variable "topic_policy" {
   type    = string
-  default = null
+  default = ""
 }
 
 variable "slack_webhook" {
@@ -13,14 +13,16 @@ variable "slack_webhook" {
 }
 
 variable "slack_username" {
-  type = string
+  type    = string
+  default = ""
 }
 
 variable "slack_channel" {
-  type = string
+  type    = string
+  default = ""
 }
 
 variable "lambda_name" {
   type    = string
-  default = null
+  default = ""
 }

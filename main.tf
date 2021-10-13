@@ -1,5 +1,5 @@
 resource "aws_sns_topic" "this" {
-  name = var.topic_name ? var.topic_name : "sns-to-slack-topic"
+  name = var.topic_name != "" ? var.topic_name : "sns-to-slack-topic"
 }
 
 resource "aws_sns_topic_subscription" "this" {
@@ -27,7 +27,7 @@ resource "aws_lambda_function" "this" {
 }
 
 resource "aws_iam_role" "this" {
-  name = var.lambda_name ? var.lambda_name : "sns-to-slack-lambda"
+  name = var.lambda_name != "" ? var.lambda_name : "sns-to-slack-lambda"
 
   assume_role_policy = <<EOF
 {
