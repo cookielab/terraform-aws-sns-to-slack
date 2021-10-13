@@ -11,8 +11,8 @@ resource "aws_sns_topic_subscription" "this" {
 resource "aws_lambda_function" "this" {
   function_name    = var.lambda_name ? var.lambda_name : "sns-to-slack-lambda"
   role             = aws_iam_role.this.arn
-  filename         = "src/lambda_function.zip"
-  source_code_hash = filebase64sha256("src/lambda_function.zip")
+  filename         = "${path.module}/src/lambda_function.zip"
+  source_code_hash = filebase64sha256("${path.module}/src/lambda_function.zip")
   handler          = "lambda_function.lambda_handler"
   runtime          = "python3.6"
 
