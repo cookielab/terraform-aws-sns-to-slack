@@ -9,7 +9,7 @@ resource "aws_sns_topic_subscription" "this" {
 }
 
 resource "aws_lambda_function" "this" {
-  function_name    = var.lambda_name ? var.lambda_name : "sns-to-slack-lambda"
+  function_name    = var.lambda_name != "" ? var.lambda_name : "sns-to-slack-lambda"
   role             = aws_iam_role.this.arn
   filename         = "${path.module}/src/lambda_function.zip"
   source_code_hash = filebase64sha256("${path.module}/src/lambda_function.zip")
@@ -51,7 +51,7 @@ data "aws_caller_identity" "current" {}
 resource "aws_sns_topic_policy" "default" {
   arn = aws_sns_topic.this.arn
 
-  policy = var.topic_policy ? var.topic_policy : data.aws_iam_policy_document.sns_topic_policy.json
+  policy = var.topic_policy != "" ? var.topic_policy : data.aws_iam_policy_document.sns_topic_policy.json
 }
 
 data "aws_iam_policy_document" "sns_topic_policy" {
