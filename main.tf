@@ -9,7 +9,7 @@ resource "aws_sns_topic_subscription" "this" {
 }
 
 resource "aws_lambda_function" "this" {
-  function_name    = var.lambda_name != "" ? var.lambda_name : "sns-to-slack-lambda"
+  function_name    = var.lambda_name != "" ? var.lambda_name : aws_sns_topic.this.name
   role             = aws_iam_role.this.arn
   filename         = "${path.module}/src/lambda_function.zip"
   source_code_hash = filebase64sha256("${path.module}/src/lambda_function.zip")
@@ -27,7 +27,7 @@ resource "aws_lambda_function" "this" {
 }
 
 resource "aws_iam_role" "this" {
-  name = var.lambda_name != "" ? var.lambda_name : "sns-to-slack-lambda"
+  name = var.lambda_name != "" ? var.lambda_name : aws_sns_topic.this.name
 
   assume_role_policy = <<EOF
 {
