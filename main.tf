@@ -28,7 +28,7 @@ resource "aws_lambda_function" "this" {
 
 resource "aws_iam_role" "this" {
   name = var.lambda_name != "" ? var.lambda_name : aws_sns_topic.this.name
-
+  managed_policy_arns = ["arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"]
   assume_role_policy = <<EOF
 {
   "Version": "2012-10-17",
