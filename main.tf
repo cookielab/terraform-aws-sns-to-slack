@@ -9,7 +9,7 @@ resource "aws_sns_topic_subscription" "this" {
 }
 
 resource "aws_lambda_function" "this" {
-  function_name    = var.lambda_name ? var.lambda_name : aws_sns_topic.this.name
+  function_name    = var.lambda_name != null ? var.lambda_name : aws_sns_topic.this.name
   role             = aws_iam_role.this.arn
   filename         = "${path.module}/src/lambda_function.zip"
   source_code_hash = filebase64sha256("${path.module}/src/lambda_function.zip")
@@ -27,7 +27,7 @@ resource "aws_lambda_function" "this" {
 }
 
 resource "aws_iam_role" "this" {
-  name = var.lambda_name ? var.lambda_name : aws_sns_topic.this.name
+  name = var.lambda_name != null ? var.lambda_name : aws_sns_topic.this.name
   managed_policy_arns = ["arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"]
   assume_role_policy = <<EOF
 {
@@ -51,7 +51,7 @@ data "aws_caller_identity" "current" {}
 resource "aws_sns_topic_policy" "default" {
   arn = aws_sns_topic.this.arn
 
-  policy = var.topic_policy ? var.topic_policy : data.aws_iam_policy_document.sns_topic_policy.json
+  policy = var.topic_policy != null ? var.topic_policy : data.aws_iam_policy_document.sns_topic_policy.json
 }
 
 data "aws_iam_policy_document" "sns_topic_policy" {
