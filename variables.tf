@@ -1,11 +1,11 @@
 variable "topic_name" {
   type    = string
-  default = ""
+  default = "sns-to-slack-topic"
 }
 
 variable "topic_policy" {
   type    = string
-  default = ""
+  default = null
 }
 
 variable "slack_webhook" {
@@ -14,15 +14,15 @@ variable "slack_webhook" {
 
 variable "slack_username" {
   type    = string
-  default = ""
+  default = null
 }
 
 variable "slack_channel" {
   type    = string
-  default = ""
+  default = null
 }
 
 variable "lambda_name" {
   type    = string
-  default = ""
+  default = null
 }
