@@ -15,11 +15,12 @@ def lambda_handler(event, context):
     msg = {
         "channel": os.environ['SLACK_CHANNEL'],
         "username": os.environ['SLACK_USERNAME'],
-        "text": message['AlarmName'],
+
         "attachments": [{
                 "color": color,
-                "fallback": message['AlarmDescription'],
+                "fallback": message['AlarmName'] + ":" + message['AlarmDescription'],
                 "fields": [
+                    {"title": "Alarm", "value": emoji+ " " + message['AlarmName']},
                     {"title": "Message", "value": message['AlarmDescription']},
                     {"title": "Reason", "value": message['NewStateReason']}
                 ]
