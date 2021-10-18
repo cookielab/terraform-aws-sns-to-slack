@@ -95,6 +95,6 @@ data "aws_iam_policy_document" "sns_topic_policy" {
 }
 
 resource "aws_lambda_event_source_mapping" "example" {
-  event_source_arn = aws_sqs_queue.this.arn
+  event_source_arn = aws_sns_topic.this.arn
   function_name    = aws_lambda_function.this.arn
 }
