@@ -8,6 +8,14 @@ resource "aws_sns_topic_subscription" "this" {
   endpoint  = aws_lambda_function.this.arn
 }
 
+resource "aws_lambda_permission" "sns" {
+  action        = "lambda:InvokeFunction"
+  function_name = aws_sns_topic.this.name
+  principal     = "sns.amazonaws.com"
+  statement_id  = "AllowSubscriptionToSNS"
+  source_arn    = aws_sns_topic.this.arn
+}
+
 resource "aws_lambda_function" "this" {
   function_name    = var.lambda_name != null ? var.lambda_name : aws_sns_topic.this.name
   role             = aws_iam_role.this.arn
@@ -92,9 +100,4 @@ data "aws_iam_policy_document" "sns_topic_policy" {
 
     sid = "__default_statement_ID"
   }
-}
-
-resource "aws_lambda_event_source_mapping" "example" {
-  event_source_arn = aws_sns_topic.this.arn
-  function_name    = aws_lambda_function.this.arn
 }
