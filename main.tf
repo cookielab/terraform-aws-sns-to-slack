@@ -93,3 +93,8 @@ data "aws_iam_policy_document" "sns_topic_policy" {
     sid = "__default_statement_ID"
   }
 }
+
+resource "aws_lambda_event_source_mapping" "example" {
+  event_source_arn = aws_sqs_queue.this.arn
+  function_name    = aws_lambda_function.this.arn
+}
